@@ -9,15 +9,18 @@ import Paper from './paper';
 const HomeStack = createMaterialTopTabNavigator({
 
     Glass: {
-        screen: Glass
+        screen: Glass,
+        
     },
 
     Plastic: {
-        screen: Plastic
+        screen: Plastic,
+        
     },
 
     Paper: {
-        screen: Paper
+        screen: Paper,
+        
     }
 },
     {
