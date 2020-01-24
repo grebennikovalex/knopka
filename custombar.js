@@ -4,12 +4,12 @@ import { View, Dimensions } from 'react-native'
 import Tab from './tab'
 
 const customBar = (props) => {
-    const { navigationState, navigation, position } = props
+    const { navigationState, navigation } = props
     
     return (
 
         <View style = {{
-            height: Dimensions.get('window').width / 3, 
+            height: Dimensions.get('window').width / 3 * 0.6, 
             backgroundColor: '#636e72',
             flexDirection: 'row',
             justifyContent: 'space-around',

@@ -4,6 +4,9 @@ import { AppLoading } from 'expo';
 import Navigator from './homestack';
 
 
+
+
+
 const getFonts = () => Font.loadAsync({
    'custom': require('./assets/fonts/MPLUSRounded1c-Black.ttf'),
    'knp': require('./assets/fonts/knp.ttf')
