@@ -51,7 +51,16 @@ export default function Paper( { navigation } ) {
                 )}
             />
             </View>
-            <OrderButton/>  
+            <OrderButton
+            showMeWastes = {() => {
+                console.log('ВАМ НУЖНО ВЫВЕЗТИ БУМАГУ ТИПА: ')
+                paperType.map(paper => {
+                    if(paper.selected === true) {
+                        console.log(paper.type)
+                    }
+                })
+                
+            }}         />  
         </View>
     )
  }

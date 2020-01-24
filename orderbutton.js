@@ -2,10 +2,16 @@ import React from 'react'
 import { TouchableOpacity, View, Text, Dimensions } from 'react-native'
 import { globalStyles } from './globalstyle'
 
-export default function OrderButton (glassType){
+
+
+export default function OrderButton ({showMeWastes}){
+
+    
+
     return(
 
-    <TouchableOpacity> 
+    <TouchableOpacity
+    onPress = {showMeWastes}> 
     
     <View style = {{
         alignItems: 'center', 

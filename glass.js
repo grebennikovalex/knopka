@@ -59,7 +59,16 @@ export default function Glass( { navigation } ) {
                 )}
             />
             </View>
-                <OrderButton          
+                <OrderButton
+                    showMeWastes = {() => {
+                        console.log('ВАМ НУЖНО ВЫВЕЗТИ СТЕКЛО ТИПА: ')
+                        glassType.map(glass => {
+                            if(glass.selected === true) {
+                                console.log(glass.type)
+                            }
+                        })
+                        
+                    }}         
                 />   
         </View>
     )

@@ -53,7 +53,17 @@ export default function Plastic( { navigation } ) {
                 )}
             />
             </View>
-            <OrderButton/>  
+            <OrderButton
+            showMeWastes = {() => {
+                console.log('ВАМ НУЖНО ВЫВЕЗТИ ПЛАСТИК ТИПА: ')
+                plasticType.map(plastic => {
+                    if(plastic.selected === true) {
+                        console.log(plastic.type)
+                    }
+                })
+                
+            }}         
+            />  
         </View>
     )
  }
