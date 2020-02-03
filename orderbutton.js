@@ -4,7 +4,7 @@ import { globalStyles } from './globalstyle'
 
 
 
-export default function OrderButton ({showMeWastes}){
+export default function OrderButton ({ showMeWastes, type }){
 
     
 
@@ -14,15 +14,16 @@ export default function OrderButton ({showMeWastes}){
     onPress = {showMeWastes}> 
     
     <View style = {{
-        alignItems: 'center', 
-        justifyContent: 'center',
-        height: Dimensions.get('screen').height * 0.35
+        alignItems: 'center'
         }}>
-        <Text style = {{fontSize: 100, fontFamily: 'knp', color: 'white'}}>
+        <Text style = {{fontSize: 80, fontFamily: 'knp', color: 'white', marginBottom: 10}}>
             0
         </Text>
         <Text style = {globalStyles.text}>
-            ВЫВЕЗТИ
+            ЗАКАЗАТЬ
+        </Text>
+        <Text style = {globalStyles.text}>
+            ВЫВОЗ {type}
         </Text>
 
     

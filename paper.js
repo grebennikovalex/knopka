@@ -1,35 +1,49 @@
 import React, { useState } from 'react'
-import { View, Text, FlatList } from 'react-native'
+import { Alert, View, Text, FlatList } from 'react-native'
 import { globalStyles } from './globalstyle'
 import WasteItem from './wasteitem'
 import { wasteColors } from './tab'
 import OrderButton from './orderbutton'
 
-//import Swipeable from 'react-native-gesture-handler/Swipeable';
+let selectedPaper = {}
+    selectedPaper.type = ''
+    selectedPaper.typeInCase = ''
+    selectedPaper.color = wasteColors[2]
 
 export default function Paper( { navigation } ) {
 
     const [paperType, setPaper] = useState(
-        [{ id: '0', type: 'ТИП 1', selected: false},
-        { id: '1', type: 'ТИП 2', selected: false},
-        { id: '2', type: 'ТИП 3', selected: false}]
+        [{ id: '10', type: 'КАРТОН', typeInCase: 'КАРТОНА', selected: false, price: '4 руб. / кг.'},
+        { id: '11', type: 'БУМАГА', typeInCase: 'БУМАГИ', selected: false, price: '4 руб. / кг.'},
+        { id: '12', type: 'КНИГИ', typeInCase: 'КНИГ', selected: false, price: '4 руб. / кг.'}]
     )
 
     const onPressWaste = (id) => setPaper((paperType) => {
         return paperType.map(paper => {
+            paper.selected = false
             if(paper.id === id) {
-                if(paper.selected === false) paper.selected = true
-                else if(paper.selected === true) paper.selected = false
-            } 
-            
+                paper.selected ? paper.selected = false : paper.selected = true
+                selectedPaper.type = paperType[id-10].type
+                selectedPaper.typeInCase = paperType[id-10].typeInCase
+                selectedPaper.id = paperType[id-10].id
+                }
+            return paper
+        })
+    })
+
+    const uncheckWaste = (id) => setPaper((paperType) => {
+        return paperType.map(paper => {
+            selectedPaper.type = ''
+            selectedPaper.typeInCase = ''
+            if(paper.id === id && paper.selected) paper.selected = false
             return paper
         })
     })
 
     return(
-        <View style = {[globalStyles.container, {backgroundColor: wasteColors[2]}]}>
-            <View style = {globalStyles.iconWrap}>
-            <Text style = {[globalStyles.icon, {fontSize: 30}]}>
+        <View style = {[globalStyles.container, {backgroundColor: wasteColors[2],  paddingTop: 10}]}>
+            <View style = {globalStyles.headerWastes}>
+            <Text style = {[globalStyles.icon, {fontSize: 25, paddingBottom: 5}]}>
                 2
             </Text>
             
@@ -39,6 +53,7 @@ export default function Paper( { navigation } ) {
             </View>
             <View style = {globalStyles.wasteListContainer}>
             <FlatList
+                horizontal = {true}
                 data = {paperType}
                 keyExtractor = {item => item.id}
                 renderItem = {({item}) => (
@@ -46,21 +61,26 @@ export default function Paper( { navigation } ) {
                 <WasteItem
                     id = {item.id}
                     onPressWaste = {onPressWaste}
+                    uncheckWaste = {uncheckWaste}
                     item = {item}
                 />
                 )}
             />
             </View>
+            <View style = {{
+                    flex: 1,
+                    justifyContent: 'center'
+                    }}>
             <OrderButton
-            showMeWastes = {() => {
-                console.log('ВАМ НУЖНО ВЫВЕЗТИ БУМАГУ ТИПА: ')
-                paperType.map(paper => {
-                    if(paper.selected === true) {
-                        console.log(paper.type)
-                    }
-                })
-                
-            }}         />  
+                type = {selectedPaper.typeInCase}
+                showMeWastes = {() => {
+                    
+                    if(!selectedPaper.type) Alert.alert('ВЫ НИЧЕГО НЕ ВЫБРАЛИ')
+                    else navigation.navigate('Orderform', selectedPaper )
+                                
+                }}         
+            />
+            </View>  
         </View>
     )
  }

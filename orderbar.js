@@ -3,9 +3,9 @@ import { View, Dimensions } from 'react-native'
 
 import Tab from './tab'
 
-const customBar = (props) => {
+const OrderBar = (props) => {
     const { navigationState, navigation } = props
-        
+    
     return (
 
         <View style = {{
@@ -17,7 +17,7 @@ const customBar = (props) => {
             
         }}>
 
-        {navigationState.routes.map((route, index ) => {
+        {navigationState.routes.map((route, index) => {
             
                 return (
                 <Tab 
@@ -31,8 +31,4 @@ const customBar = (props) => {
     )
 }
 
-export default customBar
-
-
-      
- 
+export default OrderBar

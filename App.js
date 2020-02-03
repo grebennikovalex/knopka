@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import * as Font from 'expo-font';
-import { AppLoading } from 'expo'; 
-import Navigator from './homestack';
+import React, { useState } from 'react'
+import * as Font from 'expo-font'
+import { AppLoading } from 'expo'
+import Navigator from './drawer'
 
 
 
-
+console.disableYellowBox = true
 
 const getFonts = () => Font.loadAsync({
    'custom': require('./assets/fonts/MPLUSRounded1c-Black.ttf'),
