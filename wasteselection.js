@@ -1,13 +1,14 @@
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs'
-import customBar from './custombar'
+import WasteBar from './wastebar'
 import Glass from './glass'
 import Plastic from './plastic'
 import Paper from './paper'
 import History from './history'
+import Settings from './settings'
 
 
 
-const wasteselection = createMaterialTopTabNavigator({
+const WasteSelection = createMaterialTopTabNavigator({
 
     Glass: {
         screen: Glass
@@ -25,14 +26,19 @@ const wasteselection = createMaterialTopTabNavigator({
 
     History: {
         screen: History
+    },
+
+    Settings: {
+        screen: Settings
     }
+
 },
     {
-        tabBarComponent: customBar,
+        tabBarComponent: WasteBar,
         tabBarPosition: 'bottom'
         
     }
 )    
 
 
-export default wasteselection
+export default WasteSelection

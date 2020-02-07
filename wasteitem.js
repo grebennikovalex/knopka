@@ -1,16 +1,21 @@
-import React from 'react'
-import { View,  Text, TouchableOpacity, Image, Dimensions } from 'react-native'
+import React, { useState } from 'react'
+import { View,  Text, TouchableOpacity, Image, Dimensions, Modal } from 'react-native'
 import { globalStyles } from './globalstyle'
+import { lorem } from './wastetab'
 
+const buttonString = ' ВЫВЕЗТИ '
 
 const d = Dimensions.get('screen').width * 0.4
 
-export default function WasteItem ({id, onPressWaste, uncheckWaste, item }) {
+export default function WasteItem ({id, item, wastePress }) {
+
+    const [modalOn, setModalOn] = useState(false)
+
     return(
+        <View>
         <View style = {globalStyles.wasteItem}>
-                            
+                    <TouchableOpacity onPress = {() => setModalOn(true)}>      
                     <View style = {{
-                                
                                 borderWidth: 1,
                                 borderColor: 'white',
                                 height: d,
@@ -18,49 +23,109 @@ export default function WasteItem ({id, onPressWaste, uncheckWaste, item }) {
                                 borderRadius: d / 2,
                                 alignContent: 'center',
                                 justifyContent: 'center',
-                                backgroundColor: item.selected ? 'rgba(0, 0, 0, 0.2)' : 'rgba(255, 255, 255, 0.4)'}}>
-                    <TouchableOpacity 
-                                onLongPress = {() => uncheckWaste(id)}
-                                onPress = {() => onPressWaste(id)}>
-                                <Image source = {wasteImage.wasteTypes[id]}
+                                backgroundColor: 'rgba(255, 255, 255, 0.2)'
+                                }}>
+                            <Image source = {wasteImage.wasteTypes[id]}
                                 style = {{height: d, width: d}}/>            
-                    </TouchableOpacity>   
-
+      
                     </View>
+                    </TouchableOpacity>  
 
                     <View style = {{
-                                padding: 10, 
-                                alignItems: 'center',
-                                alignContent: 'flex-end', 
+                                paddingTop: 7, 
                                 backgroundColor: 'rgba(255, 255, 255, 0.4)', 
                                 width: '100%',
                                 marginTop: 10,
+                                borderBottomLeftRadius: 10,
+                                borderBottomRightRadius: 10
                                 }}>
-                        <Text style = {{
-                                fontFamily: 'custom',
-                                fontSize: 18,
-                                color: 'white',
-                                textShadowColor: 'rgba(0, 0, 0, 0.4)',
-                                textShadowOffset: {width: 2, height: 2},
-                                textShadowRadius: 15
-                                }}>
-                            {' ' + item.type + ' '}
-                        </Text>
-                        <Text style = {{fontSize: 15, color: 'black'}}>
-                            {item.price}
-                        </Text>
+                    <TouchableOpacity onPress = {() => wastePress(id)}>
+                            <Text style = {{
+                                    alignSelf: 'center',
+                                    fontFamily: 'custom',
+                                    fontSize: 15,
+                                    color: 'white',
+                                    textShadowColor: 'rgba(0, 0, 0, 0.5)',
+                                    textShadowOffset: {width: 1, height: 1},
+                                    textShadowRadius: 7
+                                    }}>
+                                {' ' + item.type + ' '}
+                            </Text>
+                            <Text style = {{fontSize: 15, color: 'black', alignSelf: 'center',}}>
+                                {item.price}
+                            </Text>
+                         
+                            <View style = {{
+                                    padding: 7, 
+                                    marginTop: 5,
+                                    backgroundColor: '#778ca3',
+                                    borderRadius: 10,
+                                    borderColor: 'white',
+                                    borderWidth: 2
+                                    }}>
+                                <Text style = {[globalStyles.text, {
+                                    alignSelf: 'center',
+                                    fontSize: 18,
+                                    textShadowColor: 'rgba(0, 0, 0, 0.5)',
+                                    textShadowOffset: {width: 2, height: 2},
+                                    textShadowRadius: 7
+                                    }]}>
+                                    {buttonString}
+                                </Text>
+                            </View>
+                          
+                    </TouchableOpacity>
                     </View>
-                
-
-            
-
-            {/* <TouchableOpacity>
-                <View style = {[globalStyles.wasteAbout, {backgroundColor:'rgba(255, 255, 255, 0.2)'}]}>
-                    <Text style = {[globalStyles.text, {fontSize: 30}]}>
-                        ?
-                    </Text>
+            </View>
+            <Modal 
+                presentationStyle = 'formSheet' 
+                visible = {modalOn}
+                animationType = 'fade'>
+                <View style = {{
+                    flex: 1,
+                    padding: 10,
+                    paddingTop: 0,
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
+                    }}>
+                    <View style = {{alignItems: 'center', padding: 20}}>
+                    <Image source = {wasteImage.wasteTypes[id]}
+                           style = {{height: d, width: d}}/> 
+                        <Text style = {{fontSize: 20, fontFamily: 'custom'}}>{item.type}</Text>
+                            <Text>{lorem}</Text>
+                    </View>
+                    <View style = {{height: d, width: d * 2 }}>
+                    
+                    <TouchableOpacity onPress = {() => {
+                        wastePress(id)
+                        setModalOn(false)
+                        }}>
+                                <View style = {{
+                                        padding: 7, 
+                                        marginTop: 5,
+                                        backgroundColor: '#778ca3',
+                                        borderRadius: 10
+                                        }}>
+                                    <Text style = {[globalStyles.text, {
+                                        alignSelf: 'center',
+                                        fontSize: 18,
+                                        textShadowColor: 'rgba(0, 0, 0, 0.5)',
+                                        textShadowOffset: {width: 2, height: 2},
+                                        textShadowRadius: 7
+                                        }]}>
+                                        {buttonString}
+                                    </Text>
+                                </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity  onPress = {() => setModalOn(false)}>
+                    <View style = {{marginTop: 10, alignSelf: 'center'}}>
+                        <Text style = {{fontSize: 20, fontFamily: 'custom'}}>ЗАКРЫТЬ</Text>
+                    </View>
+                    </TouchableOpacity>
+                    </View>
                 </View>
-            </TouchableOpacity> */}
+
+            </Modal>
         </View>
 
     )
@@ -80,7 +145,7 @@ const wasteImage = {
         '9': require('./assets/waste-plastic-5.png'),
         '10': require('./assets/waste-paper-0.png'),
         '11': require('./assets/waste-paper-1.png'),
-        '12': require('./assets/waste-paper-2.png')
-        
+        '12': require('./assets/waste-paper-2.png'),
+        '13': require('./assets/waste-paper-3.png')
     }
 }

@@ -41,12 +41,12 @@ export const globalStyles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'space-between',
-        width: Dimensions.get('screen').width * 0.5,
+        width: Dimensions.get('screen').width * 0.47,
         paddingTop: 10,
-        margin: 5,
+        marginLeft: 4,
+        marginRight: 4,
         borderColor: 'white',
-        backgroundColor: 'rgba(255, 255, 255, 0.2)',
-        borderBottomWidth: 2
+        //borderBottomWidth: 3
 
     },
 
@@ -63,32 +63,21 @@ export const globalStyles = StyleSheet.create({
     },
 
     wasteListContainer: {
-        height: Dimensions.get('screen').height * 0.4,
+        height: Dimensions.get('screen').height * 0.75,
+        paddingLeft: 1,
+        paddingRight: 1
     },
 
-    wasteAbout: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'row',
-        width: 56,
-        height: 56,
-        margin: 5,
-        borderRadius: 56 / 2,
-        borderColor: 'white',
-        borderWidth: 2,
-        borderStyle: 'dotted'
-        
-    },
-
+   
     button: {
         alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',
         width: Dimensions.get('screen').width * 0.9,
-        height: 56,
+        height: 50,
         margin: 10,
         marginBottom: 20,
-        borderRadius: 56 / 2,
+        borderRadius: 10,
         borderColor: 'white',
         borderWidth: 2,
         borderStyle: 'dotted',
@@ -99,14 +88,14 @@ export const globalStyles = StyleSheet.create({
     input: {
         alignSelf: 'center',
         fontSize: 20,
-        width: '97%',
+        width: '100%',
         height: 50,
         margin: 3,
         paddingLeft: 20,
         paddingRight: 20,
         backgroundColor:'rgba(255, 255, 255, 0.5)',
         borderWidth: 0,
-        borderRadius: 0,
+        borderRadius: 10,
         borderColor: 'rgba(255, 255, 255, 0.7)',
         
     },
@@ -120,7 +109,7 @@ export const globalStyles = StyleSheet.create({
         paddingLeft: 20,
         paddingRight: 20,
         backgroundColor:'rgba(255, 255, 255, 0.7)',
-        borderRadius: 56 / 2,
+        borderRadius: 10,
         borderWidth: 3, 
         borderColor:  '#778ca3' 
     },
@@ -128,10 +117,10 @@ export const globalStyles = StyleSheet.create({
     
     inputSmallContainer: {
         alignSelf: 'center',
-        width: Dimensions.get('screen').width * 0.87,
+        width: Dimensions.get('screen').width * 0.9,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'flex-start',
+        alignItems: 'center',
         alignContent: 'flex-start', 
     
     },
@@ -153,6 +142,53 @@ export const globalStyles = StyleSheet.create({
     modal: {
         height: 100,
         width: 100
+    },
+
+    textShadow: {
+        fontFamily: 'custom', 
+        fontSize: 25, 
+        color: 'white',
+        textShadowColor: 'rgba(0, 0, 0, 0.5)',
+        textShadowOffset: {width: 2, height: 2},
+        textShadowRadius: 7
+    },
+
+    initialInput: { 
+        height:  Dimensions.get('screen').width * 0.40 * 0.3, 
+        borderColor: 'gray', 
+        borderWidth: 1, 
+        paddingLeft: 10, 
+        backgroundColor: 'white', 
+        borderRadius: 10 
+        
+    }, 
+
+    activeButton: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#778ca3', 
+        borderStyle: 'solid',
+        height: 50,
+        margin: 10,
+        borderColor: '#b2bec3',
+        borderWidth: 2,
+        borderRadius: 10
+    
+    },
+
+    passiveButton: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#dfe6e9', 
+        borderStyle: 'dotted',
+        height: 50,
+        margin: 10,
+        borderColor: '#dfe6e9',
+        borderWidth: 2,
+        borderRadius: 10
     }
+
+    
+                                        
 
 })

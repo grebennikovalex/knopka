@@ -1,7 +1,6 @@
 import React from 'react'
 import { View, Dimensions } from 'react-native'
-
-import Tab from './tab'
+import OrderTab from './ordertab'
 
 const OrderBar = (props) => {
     const { navigationState, navigation } = props
@@ -9,18 +8,18 @@ const OrderBar = (props) => {
     return (
 
         <View style = {{
-            height: Dimensions.get('window').width / 4 * 0.7, 
+            height: Dimensions.get('window').height * 0.1, 
             backgroundColor: '#636e72',
             flexDirection: 'row',
             justifyContent: 'space-around',
-            alignItems: 'center',
+            alignItems: 'center'
             
         }}>
 
         {navigationState.routes.map((route, index) => {
             
                 return (
-                <Tab 
+                <OrderTab 
                     index = {index}
                     isActive = {navigation.state.index}
                     onPress={() => navigation.navigate(route.routeName)}

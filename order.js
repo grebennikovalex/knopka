@@ -1,7 +1,9 @@
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs'
 import Orderform from './orderform'
 import OrderBar from './orderbar'
-import History from './history'
+import Initial from './initial'
+import Settings from './settings'
+
 
 
 const Order = createMaterialTopTabNavigator({
@@ -10,8 +12,12 @@ const Order = createMaterialTopTabNavigator({
         screen: Orderform
     },
 
-    History: {
-        screen: History
+    Initial: {
+        screen: Initial,
+      },
+
+    Settings: {
+        screen: Settings
     }
       
 }, 

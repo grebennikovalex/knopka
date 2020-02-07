@@ -1,55 +1,32 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { Alert, View,  Text, FlatList } from 'react-native'
+import React from 'react'
+import { View,  Text, FlatList } from 'react-native'
 import { globalStyles } from './globalstyle'
 import WasteItem from './wasteitem'
-import { wasteColors } from './tab'
-import OrderButton from './orderbutton'
+import { wasteColors, glassType } from './wastetab'
 
-
-let selectedGlass = {}
-    selectedGlass.type = ''
-    selectedGlass.typeInCase = ''
-    selectedGlass.color = wasteColors[0]
+let values = {
+    name: '',
+    phone: '+7',
+    email: '',
+    address: '',
+    floor: '',
+    quantity: '',
+    key: '',
+    date: '',
+    type: '',
+    lift: '',
+    color: wasteColors[0]
+}
 
 export default function Glass( { navigation } ) {
-
-    const [glassType, setGlass] = useState(
-        [{id: '0', type: 'ЗЕЛЕНОЕ', typeInCase: 'ЗЕЛЕНОГО СТЕКЛА', selected: false, price: '1 500 руб. / тонна' },
-        {id: '1', type: 'БЕЛОЕ', typeInCase: 'БЕЛОГО СТЕКЛА', selected: false, price: '1 500 руб. / тонна' },
-        {id: '2', type: 'КОРИЧНЕВОЕ', typeInCase: 'КОРИЧНЕВОГО СТЕКЛА', selected: false, price: '1 500 руб. / тонна' },
-        {id: '3', type: 'ОКОННОЕ', typeInCase: 'ОКОННОГО СТЕКЛА', selected: false, price: '1 500 руб. / тонна' }]  
-    )
-
-    // const flatListRef = useRef()
-    
-    // useEffect(() => {
-    //     flatListRef.scrollToIndex({animated: true, index: 1, viewPosition: 0.5})
-    //   }, [])
-    
-    const onPressWaste = (id) => setGlass((glassType) => {
-        return glassType.map(glass => {
-            glass.selected = false
-            if(glass.id === id) {
-                glass.selected ? glass.selected = false : glass.selected = true
-                selectedGlass.type = glassType[id].type + ' СТЕКЛО'
-                selectedGlass.typeInCase = glassType[id].typeInCase
-                selectedGlass.id = glassType[id].id
-                }
-            return glass
-        })
-    })
-
-    const uncheckWaste = (id) => setGlass((glassType) => {
-        return glassType.map(glass => {
-            selectedGlass.type = ''
-            selectedGlass.typeInCase = ''
-            if(glass.id === id && glass.selected) glass.selected = false
-            return glass
-        })
-    })
     
 
-
+    const wastePress = (id) => {
+        values.type = glassType[id].type
+        values.id = glassType[id].id
+        navigation.navigate('Orderform', {values: values})
+    }
+    
     return(
         <View style = {[globalStyles.container, {backgroundColor: wasteColors[0], paddingTop: 10}]}>
             <View style = {globalStyles.headerWastes}>
@@ -58,39 +35,25 @@ export default function Glass( { navigation } ) {
                 </Text>
             
             <Text style = {[globalStyles.text, {paddingLeft: 10}]}>
-                СТЕКЛО
+                СТЕКЛОБОЙ
             </Text>
             </View>
             <View style = {globalStyles.wasteListContainer}>
             <FlatList
+                numColumns = {2}
                 data = {glassType}
                 keyExtractor = {item => item.id}
-                horizontal = {true}
-                //ref = {flatListRef}
                 renderItem = {({item}) => (
                     
                 <WasteItem
                     id = {item.id}
-                    onPressWaste = {onPressWaste}
-                    uncheckWaste = {uncheckWaste}
+                    wastePress = {wastePress}
                     item = {item}
                 />
                 )}
             />
             </View>
-            <View style = {{
-                    flex: 1,
-                    justifyContent: 'center'
-                    }}>
-                <OrderButton
-                    type = {selectedGlass.typeInCase}
-                    showMeWastes = {() => {
-                        
-                        if(!selectedGlass.type) Alert.alert('ВЫ НИЧЕГО НЕ ВЫБРАЛИ')
-                        else navigation.navigate('Orderform', selectedGlass )
-                    }}         
-                />   
-            </View>    
+           
         </View>
     )
  }

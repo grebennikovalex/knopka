@@ -16,8 +16,8 @@ export default function Orderheader( { type, id } ) {
         <Text style = {[globalStyles.text,
                         {color: 'white',  
                         textShadowColor: 'rgba(0, 0, 0, 0.8)',
-                        textShadowOffset: {width: -1, height: 1},
-                        textShadowRadius: 15}]}>
+                        textShadowOffset: {width: 2, height: 2},
+                        textShadowRadius: 5}]}>
                 { ' ВЫВОЗИМ: ' + type + ' '}
         </Text>
         </View>
@@ -40,7 +40,8 @@ const headerImage = {
         '9': require('./assets/plastic-5.png'),
         '10': require('./assets/paper-0.png'),
         '11': require('./assets/paper-1.png'),
-        '12': require('./assets/paper-2.png')
+        '12': require('./assets/paper-2.png'),
+        '13': require('./assets/paper-3.png')
         
     }
 }

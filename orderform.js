@@ -1,61 +1,44 @@
 import React, { useState } from 'react'
-import { View,  Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Modal, Alert, Switch } from 'react-native'
+import { View,  Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Switch } from 'react-native'
 import { globalStyles } from './globalstyle'
 import { Formik } from 'formik'
 import { TextInput } from 'react-native-gesture-handler'
+import { uuid } from 'uuidv4'
 import Orderheader from './orderheader'
-import SendSMS from 'react-native-sms'
-import { db } from './config'
 
 
 const orderString = '  ЗАКАЗАТЬ  '
-
-const addOrder = item => {
-    db.ref('/items').push({
-      name: item
-    })
-  }
-
 
 export default function Orderform ({ navigation }) {
   
     const [inputStyle, setInputStyle] = useState([false, false, false, false, false, false])
     const [lift, setLift] = useState(false)
-        
-    let type = navigation.getParam('type')
-                
+    
+
+    let initialValues = navigation.getParam('values')
+
+    console.log(initialValues)
+
+    
+    
+              
     return(
         <TouchableWithoutFeedback onPress = {Keyboard.dismiss}>
-        <View style = {[globalStyles.container, { backgroundColor: navigation.getParam('color') }]}>
+        <View style = {[globalStyles.container, { backgroundColor: initialValues.color }]}>
         <Orderheader 
-            type = {type}
-            id = {navigation.getParam('id')}
+            type = {initialValues.type}
+            id = {initialValues.id}
             />
         <View style = {globalStyles.ordercontainer}>
         
 
                 <Formik
-                    initialValues = {{
-                        name: '',
-                        phone: '',
-                        email: '',
-                        address: '',
-                        floor: '',
-                        quantity: '',
-                        key: '',
-                        date: '',
-                        type: '',
-                        lift: ''
-                           
-                    }}
+                    initialValues = {initialValues}
                     onSubmit = {(values) => {
-                        values.key = toString(Math.floor(Math.random() * Math.floor(1000)))
-                        values.type = type
-                        values.lift = lift ? 'есть' : 'нет'
+                        values.key = uuid()
+                        values.lift = lift ? 'ЕСТЬ' : 'НЕТ'
                         Keyboard.dismiss()
-                        Alert.alert('ВАШ ЗАКАЗ ПРИНЯТ')
-                        addOrder(values)
-                        navigation.navigate( 'History')
+                        navigation.navigate('Confirmation', { values: values })
                     }}>
                 
                     {props => (
@@ -108,11 +91,11 @@ export default function Orderform ({ navigation }) {
                             <View style = {globalStyles.inputSmallContainer}>
                             <TextInput
                                 style = {[inputStyle[4] ? globalStyles.inputFocused : globalStyles.input,
-                                {width: '68%',
+                                {width: '40%',
                                 marginLeft: 0
                                 }]}
                                 placeholderTextColor = '#a5b1c2'
-                                placeholder = 'количество, кг'
+                                placeholder = 'кол-во, кг'
                                 onChangeText = {props.handleChange('quantity')}
                                 value = {props.values.quantity}
                                 keyboardType = 'numeric'
@@ -122,7 +105,7 @@ export default function Orderform ({ navigation }) {
 
                             <TextInput
                                 style = {[inputStyle[5] ? globalStyles.inputFocused : globalStyles.input,
-                                {width: '30%',
+                                {width: '20%',
                                 marginRight: 0
                                 }]}
                                 placeholderTextColor = '#a5b1c2'
@@ -134,16 +117,30 @@ export default function Orderform ({ navigation }) {
                                 onBlur = {() => setInputStyle([false, false, false, false, false, false])}
                                                                 
                             />
+                            <View style = {{
+                                alignItems: 'flex-end',
+                                height: 50, 
+                                width: '30%'
+                                }}>
+                                
+                                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                    <Switch
+                                        thumbColor = {'#778ca3'}
+                                        trackColor = {{false: 'white', true: 'rgba(255, 255, 255, 0.5)'}}
+                                        value = {lift}
+                                        onValueChange = {v => {
+                                        setLift(v)
+                                        }}
+                                    />
+                                </View>
+                                <Text style = {{
+                                                fontFamily: 'custom',
+                                                color: 'white'
+                                                }}>
+                                    ЛИФТ: {lift ? ' ЕСТЬ' : ' НЕТ'}
+                                </Text>     
                             </View>
-                            
-                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                <Switch
-                                    value = {lift}
-                                    onValueChange = {v => {
-                                    setLift(v)
-                                    }}
-                                />
-                            </View>
+                        </View>
                            
 
                             <TouchableOpacity
@@ -157,8 +154,8 @@ export default function Orderform ({ navigation }) {
                                                 globalStyles.text, 
                                                 {color: 'white',  
                                                 textShadowColor: 'rgba(0, 0, 0, 0.5)',
-                                                textShadowOffset: {width: -1, height: 1},
-                                                textShadowRadius: 20
+                                                textShadowOffset: {width: 2, height: 2},
+                                                textShadowRadius: 5
                                                 }]}>
                                          {orderString}     
                                     </Text>
@@ -184,9 +181,8 @@ export default function Orderform ({ navigation }) {
                         </View>
                 
             </TouchableOpacity>
-            
-       
-       </View>
+        
+        </View>
        </TouchableWithoutFeedback>
 
     )
