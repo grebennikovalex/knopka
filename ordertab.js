@@ -45,7 +45,7 @@ const OrderTab = ({ onPress, index, isActive }) => {
           </Text>
           <Text style = {{
             color: screenType[index].iconColor,
-            fontSize: 10,
+            fontSize: Dimensions.get('window').width * 0.02,
             paddingTop: 5
           }}>
             {screenType[index].name}

@@ -46,7 +46,7 @@ export const globalStyles = StyleSheet.create({
         marginLeft: 4,
         marginRight: 4,
         borderColor: 'white',
-        //borderBottomWidth: 3
+        
 
     },
 
@@ -154,7 +154,7 @@ export const globalStyles = StyleSheet.create({
     },
 
     initialInput: { 
-        height:  Dimensions.get('screen').width * 0.40 * 0.3, 
+        height:  Dimensions.get('screen').width * 0.1, 
         borderColor: 'gray', 
         borderWidth: 1, 
         paddingLeft: 10, 
@@ -168,7 +168,7 @@ export const globalStyles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#778ca3', 
         borderStyle: 'solid',
-        height: 50,
+        height: Dimensions.get('screen').width * 0.1,
         margin: 10,
         borderColor: '#b2bec3',
         borderWidth: 2,
@@ -181,7 +181,7 @@ export const globalStyles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#dfe6e9', 
         borderStyle: 'dotted',
-        height: 50,
+        height: Dimensions.get('screen').width * 0.1,
         margin: 10,
         borderColor: '#dfe6e9',
         borderWidth: 2,

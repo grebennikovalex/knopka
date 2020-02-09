@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, FlatList } from 'react-native'
+import { View, Text, FlatList, ImageBackground } from 'react-native'
 import { globalStyles } from './globalstyle'
 import WasteItem from './wasteitem'
 import { wasteColors, paperType } from './wastetab'
@@ -28,6 +28,11 @@ export default function Paper( { navigation } ) {
  
     return(
         <View style = {[globalStyles.container, {backgroundColor: wasteColors[2],  paddingTop: 10}]}>
+            <ImageBackground 
+            source = {require('./assets/knp_backG.png')}
+            style = {{alignItems: 'center', height: '100%'}}
+            imageStyle = {{resizeMode : 'repeat'}}>
+
             <View style = {globalStyles.headerWastes}>
             <Text style = {[globalStyles.icon, {fontSize: 25, paddingBottom: 5}]}>
                 2
@@ -52,7 +57,7 @@ export default function Paper( { navigation } ) {
                 )}
             />
             </View>
-          
+            </ImageBackground>  
         </View>
     )
  }

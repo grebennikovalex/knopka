@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View,  Text, FlatList, Dimensions } from 'react-native'
+import { View,  Text, FlatList, Dimensions, ImageBackground } from 'react-native'
 import { globalStyles } from './globalstyle'
 import { wasteColors } from './wastetab'
 import { db } from './config'
@@ -18,8 +18,8 @@ export default class History extends Component {
 componentDidMount(){
     itemsRef.on('value', snapshot => {
         let data = snapshot.val();
-        let items = Object.values(data);
-        this.setState({ items });
+        let items = Object.values(data)
+        this.setState({ items })
       })
 }
 
@@ -27,22 +27,30 @@ componentDidMount(){
     render(){
 
     return(
-        <View style = {[globalStyles.container, {backgroundColor: wasteColors[3], alignItems: 'stretch'}]}>
-            <View style = {globalStyles.headerWastes}>
-                    <Text style = {[globalStyles.icon, {fontSize: 30, paddingBottom: 5, color: '#a4b0be'}]}>
+        <View style = {[globalStyles.container, {backgroundColor: wasteColors[3], paddingTop: 10, alignItems: 'stretch'}]}>
+             <ImageBackground 
+                    source = {require('./assets/knp_backG.png')}
+                    style = {{alignItems: 'center', height: '100%'}}
+                    imageStyle = {{resizeMode : 'repeat'}}>
+
+            
+            <View style = { globalStyles.headerWastes }>
+                    <Text style = {[globalStyles.icon, {fontSize: 30, paddingBottom: 5, color: 'white'}]}>
                         4
                     </Text>
-                    <Text style = {[globalStyles.text, {paddingLeft: 10, color: '#a4b0be'}]}>
+                    <Text style = {[globalStyles.text, {paddingLeft: 10, color: 'white'}]}>
                         МОИ ЗАКАЗЫ
                     </Text>
             </View>
 
-            <View style = {{marginTop: 0, backgroundColor: wasteColors[3], alignItems: 'stretch'}}>
+            <View style = {{
+                flex: 1,
+                
+            }}>
                 
                 <FlatList
                     keyExtractor = {item => item.key}
-                    data = {this.state.items}
-                    inverted = {true}
+                    data = {this.state.items.reverse()}
                     renderItem = {({item}) => (
                         <View style = {{
                             height: Dimensions.get('screen').height * 0.1,
@@ -50,17 +58,25 @@ componentDidMount(){
                             justifyContent: 'space-between', 
                             paddingRight: 5,
                             alignItems: 'center',
-                            borderBottomWidth: 2,
-                            borderBottomColor: 'gray',
-                            marginTop: 5
+                            marginLeft: 10
                             
                             }}>
                                 <View style = {{
-                                                backgroundColor: wasteColors[3],
+                                                backgroundColor: '#dfe4ea',
+                                                height: d,
+                                                width: Dimensions.get('screen').width * 0.75,
                                                 paddingLeft: 10,
-                                                
+                                                padding: 3,
+                                                borderTopRightRadius: d / 2,
+                                                borderBottomRightRadius: d / 2,
+                                                borderBottomLeftRadius: 10,
+                                                borderTopLeftRadius: 10,
+                                                marginRight: 5,
+                                                elevation: 3,
+                                                borderWidth: 2,
+                                                borderColor: 'white'
                                                 }}>
-                                    <Text style = {{fontFamily: 'custom', fontSize: 15, color: 'gray'}}>
+                                    <Text style = {{fontFamily: 'custom', fontSize: d * 0.2, color: 'gray'}}>
                                         {item.type + ' - ' + item.quantity + ' кг.'}</Text>
                                     <Text>{item.name}</Text>
                                     <Text>{item.address}</Text>
@@ -82,8 +98,8 @@ componentDidMount(){
                                         margin: 5
                                     
                                         }}>
-                                    <Text style ={{fontFamily: 'custom', fontSize: 10, color: 'white'}}>ПОВТОР</Text>
-                                    <Text style ={{fontFamily: 'custom', fontSize: 10, color: 'white'}}>ЗАКАЗА</Text>
+                                    <Text style ={{fontFamily: 'custom', fontSize: d * 0.12, color: 'white'}}>ПОВТОР</Text>
+                                    <Text style ={{fontFamily: 'custom', fontSize: d * 0.12, color: 'white'}}>ЗАКАЗА</Text>
                                 </View>
                                 </TouchableOpacity>
 
@@ -91,7 +107,7 @@ componentDidMount(){
                     )}
                 />
             </View>
-           
+            </ImageBackground>   
         </View>
     )
     }

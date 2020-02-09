@@ -3,8 +3,8 @@ import { View, Dimensions } from 'react-native'
 
 import WasteTab from './wastetab'
 
-const WasteBar = (props) => {
-    const { navigationState, navigation } = props
+const WasteBar = ({ navigationState, navigation }) => {
+    
         
     return (
 

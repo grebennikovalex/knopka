@@ -2,8 +2,8 @@ import React from 'react'
 import { View, Dimensions } from 'react-native'
 import OrderTab from './ordertab'
 
-const OrderBar = (props) => {
-    const { navigationState, navigation } = props
+const OrderBar = ({ navigationState, navigation }) => {
+    
     
     return (
 
