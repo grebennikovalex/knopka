@@ -8,6 +8,7 @@ import Firebase from 'firebase'
 const d = Dimensions.get('screen').width * 0.40
 let user = {}
 user.email = null
+user.password = null
 Firebase.auth().onAuthStateChanged(e => e ? 
     user = Firebase.auth().currentUser : null)
 

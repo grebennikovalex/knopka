@@ -1,8 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState  } from 'react'
 import * as Font from 'expo-font'
 import { AppLoading } from 'expo'
-import Navigator from './homestack'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+import WasteSelection from './wasteselection'
+import Orderform from './orderform'
+import Confirmation from './confirmation'
 
+
+const Stack = createStackNavigator()
 
 
 console.disableYellowBox = true
@@ -16,13 +22,23 @@ const getFonts = () => Font.loadAsync({
 
 export default function App()  {
 
-  const[fontsLoaded, setFontsLoaded] = useState(false);
-  
+  const[fontsLoaded, setFontsLoaded] = useState(false)
   
 
 if(fontsLoaded){
     return (
-      <Navigator/>
+      
+      <NavigationContainer>
+      <Stack.Navigator 
+        initialRouteName = 'WasteSelection' 
+        headerMode = 'none'
+        >
+          <Stack.Screen name = 'WasteSelection'  component = {WasteSelection} />
+          <Stack.Screen name = 'Orderform'  component = {Orderform} />
+          <Stack.Screen name = 'Confirmation'  component = {Confirmation} />
+      </Stack.Navigator>
+      </NavigationContainer>
+      
     )
 
   } else {

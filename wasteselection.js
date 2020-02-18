@@ -1,4 +1,5 @@
-import { createMaterialTopTabNavigator } from 'react-navigation-tabs'
+import React from 'react'
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import WasteBar from './wastebar'
 import Glass from './glass'
 import Plastic from './plastic'
@@ -8,37 +9,28 @@ import Settings from './settings'
 
 
 
-const WasteSelection = createMaterialTopTabNavigator({
+const Tab = createMaterialTopTabNavigator()
 
-    Glass: {
-        screen: Glass
-    },
+function WasteSelection() {
+  
+
+    return (
       
-    Plastic: {
-        screen: Plastic
-        
-    },
+      <Tab.Navigator
+      initialRouteName = 'Paper' 
+      tabBarPosition = 'bottom'
+      
+      tabBar = {props => <WasteBar {...props} />}
 
-    Paper: {
-        screen: Paper
-        
-    },
-
-    History: {
-        screen: History
-    },
-
-    Settings: {
-        screen: Settings
-    }
-
-},
-    {
-        tabBarComponent: WasteBar,
-        tabBarPosition: 'bottom'
-        
-    }
-)    
-
+      >
+        <Tab.Screen name = 'Glass' component = {Glass} />
+        <Tab.Screen name = 'Plastic' component = {Plastic} />
+        <Tab.Screen name = 'Paper' component = {Paper} />
+        <Tab.Screen name = 'History' component = {History} />
+        <Tab.Screen name = 'Settings' component = {Settings} />
+      </Tab.Navigator>
+      
+    )
+  }
 
 export default WasteSelection

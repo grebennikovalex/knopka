@@ -7,18 +7,18 @@ export const globalStyles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'flex-start',
-        paddingTop: 28
-        
+        height: Dimensions.get('screen').height
+                
     },
 
     ordercontainer: {
         flex: 1,
-        width: Dimensions.get('screen').width * 0.9,
+        width: Dimensions.get('screen').width,
+        height: Dimensions.get('screen').height * 1.25,
         alignItems: 'center',
         alignContent: 'center',
         justifyContent: 'flex-start',
-        marginTop: 10
+        
      
     },
 
@@ -46,6 +46,7 @@ export const globalStyles = StyleSheet.create({
         marginLeft: 4,
         marginRight: 4,
         borderColor: 'white',
+        paddingBottom: 5
         
 
     },
@@ -53,7 +54,7 @@ export const globalStyles = StyleSheet.create({
     headerWastes: {
         width: Dimensions.get('screen').width,
         height: Dimensions.get('screen').width * 0.1,
-        marginTop: 20,
+        marginTop: 28,
         marginBottom: 0,
         paddingLeft: 22,
         flexDirection: 'row',
@@ -63,9 +64,12 @@ export const globalStyles = StyleSheet.create({
     },
 
     wasteListContainer: {
-        height: Dimensions.get('screen').height * 0.75,
+        flex: 1,
+        height: '100%',
         paddingLeft: 1,
-        paddingRight: 1
+        paddingRight: 1,
+         
+        
     },
 
    
@@ -80,15 +84,15 @@ export const globalStyles = StyleSheet.create({
         borderRadius: 10,
         borderColor: 'white',
         borderWidth: 2,
-        borderStyle: 'dotted',
-        backgroundColor:'rgba(255, 255, 255, 0.2)'
+        backgroundColor:'transparent',
+        elevation: 3
     
     },
 
     input: {
         alignSelf: 'center',
         fontSize: 20,
-        width: '100%',
+        width: Dimensions.get('screen').width * 0.9,
         height: 50,
         margin: 3,
         paddingLeft: 20,
@@ -103,7 +107,7 @@ export const globalStyles = StyleSheet.create({
     inputFocused: {
         alignSelf: 'center',
         fontSize: 20,
-        width: '100%',
+        width: Dimensions.get('screen').width * 0.9,
         height: 56,
         margin: 0,
         paddingLeft: 20,
@@ -120,8 +124,9 @@ export const globalStyles = StyleSheet.create({
         width: Dimensions.get('screen').width * 0.9,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',
-        alignContent: 'flex-start', 
+        alignItems: 'flex-end',
+        alignContent: 'flex-end', 
+        
     
     },
 
@@ -129,13 +134,9 @@ export const globalStyles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         fontSize: 20,
-        width: Dimensions.get('screen').width,
-        height: 60,
-        borderBottomColor: 'white',
-        borderBottomWidth: 3,
-        paddingLeft: 20,
-        paddingRight: 20,
-        backgroundColor:'rgba(255, 255, 255, 0.3)',
+        width: '100%',
+        height: 40,
+        marginTop: 28
         
     },
 

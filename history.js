@@ -1,42 +1,68 @@
-import React, { Component } from 'react'
-import { View,  Text, FlatList, Dimensions, ImageBackground } from 'react-native'
+import React, { useState, useEffect, useCallback } from 'react'
+import { View,  Text, FlatList, Dimensions, ImageBackground, Image } from 'react-native'
+import { useFocusEffect } from '@react-navigation/native'
 import { globalStyles } from './globalstyle'
 import { wasteColors } from './wastetab'
 import { db } from './config'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler'
+import Firebase from 'firebase'
+import { wasteImage } from './wasteitem'
+import ItemDate from './date'
+import { LinearGradient } from 'expo-linear-gradient'
 
 const d = Dimensions.get('screen').width * 0.17
 
-let itemsRef = db.ref('/items')
+const History = ({ navigation }) => {
 
-export default class History extends Component {
-    state = {
-        items: []
-      }
+    const [user, setUser] = useState({})
+    const [items, setItems] = useState([])
+  
+    useFocusEffect(
 
+        useCallback(() => {
+            
+            setUser( Firebase.auth().currentUser ) 
+            //console.log(user)
+                    
+          }, [])
+    )
 
-componentDidMount(){
-    itemsRef.on('value', snapshot => {
-        let data = snapshot.val();
-        let items = Object.values(data)
-        this.setState({ items })
-      })
-}
+    useEffect(() => {
 
-    
-    render(){
+        user ? 
+                db.ref('/users/' + user.uid).on('value', snapshot => {
+                const newItems = Object.values(snapshot.val())
+                setItems(newItems)
+                })
+             : 
+                setItems([])
+     
+    },[items.length, user])    
+
+    const setItemHeight = (key) => {
+        setItems((items) => {
+            return items.map(item => {
+            if (item.key == key) item.height ? item.height = false : item.height = true
+            return item
+            }).reverse()
+        })
+    }
 
     return(
-        <View style = {[globalStyles.container, {backgroundColor: wasteColors[3], paddingTop: 10, alignItems: 'stretch'}]}>
-             <ImageBackground 
+
+        <View style = {[globalStyles.container, {backgroundColor: wasteColors[3], alignItems: 'stretch'}]}>
+            <ImageBackground 
                     source = {require('./assets/knp_backG.png')}
-                    style = {{alignItems: 'center', height: '100%'}}
+                    style = {{alignItems: 'center', height: '100%', width: '100%'}}
                     imageStyle = {{resizeMode : 'repeat'}}>
 
-            
+            <LinearGradient
+                        colors = {['transparent', wasteColors[3]]}
+                        start = {[0, 0.85]}
+                        end = {[0, 1.0]}>
             <View style = { globalStyles.headerWastes }>
                     <Text style = {[globalStyles.icon, {fontSize: 30, paddingBottom: 5, color: 'white'}]}>
-                        4
+                        5
                     </Text>
                     <Text style = {[globalStyles.text, {paddingLeft: 10, color: 'white'}]}>
                         МОИ ЗАКАЗЫ
@@ -46,25 +72,28 @@ componentDidMount(){
             <View style = {{
                 flex: 1,
                 
+                
             }}>
+                
+                {items.length ? 
                 
                 <FlatList
                     keyExtractor = {item => item.key}
-                    data = {this.state.items.reverse()}
+                    data = {items.reverse()}
                     renderItem = {({item}) => (
                         <View style = {{
-                            height: Dimensions.get('screen').height * 0.1,
+                            width: '100%',
                             flexDirection: 'row',
                             justifyContent: 'space-between', 
-                            paddingRight: 5,
-                            alignItems: 'center',
-                            marginLeft: 10
+                            alignItems: 'flex-start',
+                            backgroundColor: 'rgba(255,255,255,0.35)'
                             
                             }}>
-                                <View style = {{
+                                <TouchableOpacity onPress = {() => setItemHeight(item.key)}>
+                                    <View style = {{
                                                 backgroundColor: '#dfe4ea',
-                                                height: d,
-                                                width: Dimensions.get('screen').width * 0.75,
+                                                height: item.height ? d * 2 : d,
+                                                width: Dimensions.get('screen').width * 0.78,
                                                 paddingLeft: 10,
                                                 padding: 3,
                                                 borderTopRightRadius: d / 2,
@@ -72,17 +101,40 @@ componentDidMount(){
                                                 borderBottomLeftRadius: 10,
                                                 borderTopLeftRadius: 10,
                                                 marginRight: 5,
+                                                margin: 5,
                                                 elevation: 3,
                                                 borderWidth: 2,
-                                                borderColor: 'white'
+                                                borderColor: 'white',
+                                                flexDirection: 'row',
+                                                alignItems: 'flex-start',
+                                                justifyContent: 'space-between'
                                                 }}>
-                                    <Text style = {{fontFamily: 'custom', fontSize: d * 0.2, color: 'gray'}}>
-                                        {item.type + ' - ' + item.quantity + ' кг.'}</Text>
-                                    <Text>{item.name}</Text>
-                                    <Text>{item.address}</Text>
-                                </View>
+                                        <View>
+                                            <Text style = {{fontFamily: 'custom', fontSize: d * 0.2, color: 'gray'}}>
+                                                {item.type + ' - ' + item.quantity + ' кг.'}</Text>
+                                            <ScrollView style = {{width: d * 3}}>
+                                                <ItemDate  timestamp = {item.date} mode = 'full'/>
+                                            <Text>{item.address}</Text>
+                                            <Text>Лифт: {item.lift ? ' ЕСТЬ' : ' НЕТ'}</Text>
+                                            <View style = {{flexDirection: 'row'}}>
+                                                <Text style = {{fontWeight: 'bold'}}>ВЫВОЗ: </Text> 
+                                                <ItemDate  timestamp = {item.removalDate} mode = 'full'/>
+                                            </View>
+                                            
+                                                
+                                            </ScrollView>    
+                                        </View>
 
-                                <TouchableOpacity onPress = {() => this.props.navigation.navigate('Orderform', {values: item})}>
+                                       
+                                                    <Image source = {wasteImage.wasteTypes[item.id]}
+                                                    style = {{height: d/1.5, width: d/1.5, marginRight: 5, marginTop: 5}}/>
+
+                                                
+
+                                    </View>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity onPress = {() => navigation.navigate('Orderform', {values: item})}>
                                 <View style = {{
                                         
                                         backgroundColor: '#f6b93b',
@@ -106,9 +158,17 @@ componentDidMount(){
                         </View>
                     )}
                 />
+                : 
+                <View style = {{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                    <Text style = {globalStyles.text}> ВЫ ЕЩЕ НИЧЕГО НЕ ЗАКАЗАЛИ </Text>
+                </View>}
+
+
             </View>
+            </LinearGradient>
             </ImageBackground>   
         </View>
     )
-    }
 }
+
+export default History

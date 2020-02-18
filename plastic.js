@@ -3,6 +3,7 @@ import { View, Text, FlatList, ImageBackground } from 'react-native'
 import { globalStyles } from './globalstyle'
 import WasteItem from './wasteitem'
 import { wasteColors, plasticType } from './wastetab'
+import { LinearGradient } from 'expo-linear-gradient'
 
 let values = {
     name: '',
@@ -29,12 +30,15 @@ export default function Plastic( { navigation } ) {
         }
   
     return(
-        <View style = {[globalStyles.container, {backgroundColor: wasteColors[1],  paddingTop: 10}]}>
+        <View style = {[globalStyles.container, {backgroundColor: wasteColors[1], alignItems: 'stretch'}]}>
             <ImageBackground 
-            source = {require('./assets/knp_backG.png')}
-            style = {{alignItems: 'center', height: '100%'}}
-            imageStyle = {{resizeMode : 'repeat'}}>
-            
+                    source = {require('./assets/knp_backG.png')}
+                    style = {{alignItems: 'center', height: '100%', width: '100%'}}
+                    imageStyle = {{resizeMode : 'repeat'}}>
+            <LinearGradient
+                        colors = {['transparent', wasteColors[1]]}
+                        start = {[0, 0.85]}
+                        end = {[0, 1.0]}>
             <View style = {globalStyles.headerWastes}>
             <Text style = {[globalStyles.icon, {fontSize: 30, paddingBottom: 5}]}>
                 3
@@ -58,6 +62,7 @@ export default function Plastic( { navigation } ) {
                 )}
             />
             </View>
+            </LinearGradient>
             </ImageBackground>   
         </View>
     )

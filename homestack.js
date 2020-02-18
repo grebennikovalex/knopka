@@ -1,29 +1,19 @@
-import { createStackNavigator } from 'react-navigation-stack';
+import { createStackNavigator } from '@react-navigation/stack'
 import { createAppContainer } from 'react-navigation'
 import WasteSelection from './wasteselection'
-import Order from './order'
-import Initial from './initial'
-import Settings from './settings'
+import Orderform from './orderform'
 import Confirmation from './confirmation'
 
 
 
 const MainNavigator = createStackNavigator({
     
-  Initial: {
-    screen: Initial,
-  },
-
   WasteSelection: {
-    screen: WasteSelection,
+    screen: WasteSelection
   },
 
-  Order: {
-    screen: Order,
-  },
-
-  Settings: {
-    screen: Settings
+  Orderform: {
+    screen: Orderform 
   },
 
   Confirmation: {

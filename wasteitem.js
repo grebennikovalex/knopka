@@ -60,15 +60,14 @@ export default function WasteItem ({id, item, wastePress }) {
                                     marginTop: 5,
                                     backgroundColor: '#778ca3',
                                     borderRadius: 10,
-                                    borderColor: 'white',
-                                    borderWidth: 2
+                                    borderWidth: 2,
+                                    borderColor:'#b2bec3',
+                                    elevation: 2
                                     }}>
                                 <Text style = {[globalStyles.text, {
                                     alignSelf: 'center',
                                     fontSize: 18,
-                                    textShadowColor: 'rgba(0, 0, 0, 0.5)',
-                                    textShadowOffset: {width: 2, height: 2},
-                                    textShadowRadius: 7
+                                    
                                     }]}>
                                     {buttonString}
                                 </Text>
@@ -86,7 +85,8 @@ export default function WasteItem ({id, item, wastePress }) {
                     padding: 10,
                     paddingTop: 0,
                     justifyContent: 'space-between',
-                    alignItems: 'center'
+                    alignItems: 'center',
+                    
                     }}>
                     <View style = {{alignItems: 'center', padding: 20}}>
                     <Image source = {wasteImage.wasteTypes[id]}
@@ -104,14 +104,15 @@ export default function WasteItem ({id, item, wastePress }) {
                                         padding: 7, 
                                         marginTop: 5,
                                         backgroundColor: '#778ca3',
-                                        borderRadius: 10
+                                        borderRadius: 10,
+                                        borderWidth: 2,
+                                        borderColor: '#b2bec3',
+                                        elevation: 2
                                         }}>
                                     <Text style = {[globalStyles.text, {
                                         alignSelf: 'center',
                                         fontSize: 18,
-                                        textShadowColor: 'rgba(0, 0, 0, 0.5)',
-                                        textShadowOffset: {width: 2, height: 2},
-                                        textShadowRadius: 7
+                                        
                                         }]}>
                                         {buttonString}
                                     </Text>
@@ -131,7 +132,7 @@ export default function WasteItem ({id, item, wastePress }) {
     )
 }
 
-const wasteImage = {
+export const wasteImage = {
     wasteTypes: {
         '0': require('./assets/waste-glass-0.png'),
         '1': require('./assets/waste-glass-1.png'),

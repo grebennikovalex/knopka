@@ -3,27 +3,28 @@ import { View, Dimensions } from 'react-native'
 
 import WasteTab from './wastetab'
 
-const WasteBar = ({ navigationState, navigation }) => {
+const WasteBar = ({ state, navigation }) => {
     
         
     return (
 
         <View style = {{
-            height: Dimensions.get('window').height * 0.1, 
+            height: Dimensions.get('screen').height * 0.1, 
             backgroundColor: '#636e72',
             flexDirection: 'row',
             justifyContent: 'space-around',
-            alignItems: 'center',
+            alignItems: 'center'
             
         }}>
 
-        {navigationState.routes.map((route, index ) => {
+        {state.routes.map((route, index) => {
             
                 return (
                 <WasteTab 
+                    key = {index}
                     index = {index}
-                    isActive = {navigation.state.index}
-                    onPress={() => navigation.navigate(route.routeName)}
+                    isActive = {state.index}
+                    onPress={() => navigation.navigate(route.name)}
                 />
                 )
             })}
