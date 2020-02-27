@@ -8,15 +8,19 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^5.12.1",
+    "@react-native-community/datetimepicker": "2.1.0",
     "@react-native-community/masked-view": "^0.1.6",
     "@react-navigation/bottom-tabs": "^5.0.0",
     "@react-navigation/drawer": "^5.0.0-alpha.41",
     "@react-navigation/material-top-tabs": "^5.0.0",
     "@react-navigation/native": "^5.0.0",
     "@react-navigation/stack": "^5.0.0",
+    "cors": "^2.8.5",
     "expo": "~36.0.0",
-    "firebase": "^7.7.0",
+    "firebase": "^7.9.1",
     "formik": "^2.1.2",
+    "nodemailer": "^6.4.3",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
@@ -30,8 +34,7 @@
     "react-navigation-drawer": "^2.3.3",
     "react-navigation-stack": "^1.10.3",
     "react-navigation-tabs": "^2.7.0",
-    "uuidv4": "^6.0.2",
-    "@react-native-community/datetimepicker": "2.1.0"
+    "uuidv4": "^6.0.2"
   },
   "devDependencies": {
     "babel-preset-expo": "~8.0.0",

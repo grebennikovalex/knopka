@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View,  Text, TouchableOpacity, Image, Dimensions, Modal } from 'react-native'
 import { globalStyles } from './globalstyle'
-import { lorem } from './wastetab'
+import { ScrollView } from 'react-native-gesture-handler'
 
 const buttonString = ' ВЫВЕЗТИ '
 
@@ -43,7 +43,7 @@ export default function WasteItem ({id, item, wastePress }) {
                             <Text style = {{
                                     alignSelf: 'center',
                                     fontFamily: 'custom',
-                                    fontSize: 15,
+                                    fontSize: d * 0.09,
                                     color: 'white',
                                     textShadowColor: 'rgba(0, 0, 0, 0.5)',
                                     textShadowOffset: {width: 1, height: 1},
@@ -51,8 +51,8 @@ export default function WasteItem ({id, item, wastePress }) {
                                     }}>
                                 {' ' + item.type + ' '}
                             </Text>
-                            <Text style = {{fontSize: 15, color: 'black', alignSelf: 'center',}}>
-                                {item.price}
+                            <Text style = {{fontSize: 15, color: 'black', alignSelf: 'center'}}>
+                                {item.price + ' ' + '\u20bd' + (item.price > 1000 ?  '/тонна' : '/кг')}
                             </Text>
                          
                             <View style = {{
@@ -67,7 +67,6 @@ export default function WasteItem ({id, item, wastePress }) {
                                 <Text style = {[globalStyles.text, {
                                     alignSelf: 'center',
                                     fontSize: 18,
-                                    
                                     }]}>
                                     {buttonString}
                                 </Text>
@@ -83,16 +82,44 @@ export default function WasteItem ({id, item, wastePress }) {
                 <View style = {{
                     flex: 1,
                     padding: 10,
-                    paddingTop: 0,
+                    paddingVertical: 0,
                     justifyContent: 'space-between',
-                    alignItems: 'center',
-                    
+                    alignItems: 'center'                    
                     }}>
-                    <View style = {{alignItems: 'center', padding: 20}}>
+                    <View style = {{flex: 1, alignItems: 'center', paddingHorizontal: 25}}>
+
+                    
                     <Image source = {wasteImage.wasteTypes[id]}
-                           style = {{height: d, width: d}}/> 
-                        <Text style = {{fontSize: 20, fontFamily: 'custom'}}>{item.type}</Text>
-                            <Text>{lorem}</Text>
+                           style = {{height: d * 0.75, width: d * 0.75}}/> 
+
+                    <View style={{
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        position: 'absolute', 
+                        top: d * 0.1, right: d * 0.1
+                        }}>
+
+                    <TouchableOpacity  onPress = {() => setModalOn(false)}>
+                        <Text style = {[globalStyles.icon, {paddingLeft: 10, 
+                            color: '#778ca3', 
+                            fontSize: 30, 
+                            alignSelf: 'flex-start', 
+                            right: d * 0.03}]}>
+                            Z
+                        </Text>
+                    </TouchableOpacity>
+                    </View>
+                           
+                        <Text style = {{fontSize: 20, fontFamily: 'custom'}}>
+                            {item.type}
+                        </Text>
+                        <ScrollView>
+                            <Text style={{
+                                fontSize: d * 0.075,
+                                textAlign: 'left'
+
+                                }}>{item.description}</Text>
+                        </ScrollView>
                     </View>
                     <View style = {{height: d, width: d * 2 }}>
                     
@@ -118,11 +145,9 @@ export default function WasteItem ({id, item, wastePress }) {
                                     </Text>
                                 </View>
                     </TouchableOpacity>
-                    <TouchableOpacity  onPress = {() => setModalOn(false)}>
-                    <View style = {{marginTop: 10, alignSelf: 'center'}}>
-                        <Text style = {{fontSize: 20, fontFamily: 'custom'}}>ЗАКРЫТЬ</Text>
-                    </View>
-                    </TouchableOpacity>
+
+                    
+
                     </View>
                 </View>
 
@@ -132,21 +157,24 @@ export default function WasteItem ({id, item, wastePress }) {
     )
 }
 
+
 export const wasteImage = {
     wasteTypes: {
-        '0': require('./assets/waste-glass-0.png'),
-        '1': require('./assets/waste-glass-1.png'),
-        '2': require('./assets/waste-glass-2.png'),
-        '3': require('./assets/waste-glass-3.png'),
-        '4': require('./assets/waste-plastic-0.png'),
-        '5': require('./assets/waste-plastic-1.png'),
-        '6': require('./assets/waste-plastic-2.png'),
-        '7': require('./assets/waste-plastic-3.png'),
-        '8': require('./assets/waste-plastic-4.png'),
-        '9': require('./assets/waste-plastic-5.png'),
-        '10': require('./assets/waste-paper-0.png'),
-        '11': require('./assets/waste-paper-1.png'),
-        '12': require('./assets/waste-paper-2.png'),
-        '13': require('./assets/waste-paper-3.png')
+        '0': {uri: 'https://knoprka-e6c2e.firebaseapp.com/assets/waste-glass-0.png'},
+        '1': {uri: 'https://knoprka-e6c2e.firebaseapp.com/assets/waste-glass-1.png'},
+        '2': {uri: 'https://knoprka-e6c2e.firebaseapp.com/assets/waste-glass-2.png'},
+        '3': {uri: 'https://knoprka-e6c2e.firebaseapp.com/assets/waste-glass-3.png'},
+        '4': {uri: 'https://knoprka-e6c2e.firebaseapp.com/assets/waste-plastic-0.png'},
+        '5': {uri: 'https://knoprka-e6c2e.firebaseapp.com/assets/waste-plastic-1.png'},
+        '6': {uri: 'https://knoprka-e6c2e.firebaseapp.com/assets/waste-plastic-2.png'},
+        '7': {uri: 'https://knoprka-e6c2e.firebaseapp.com/assets/waste-plastic-3.png'},
+        '8': {uri: 'https://knoprka-e6c2e.firebaseapp.com/assets/waste-plastic-4.png'},
+        '9': {uri: 'https://knoprka-e6c2e.firebaseapp.com/assets/waste-plastic-5.png'},
+        '10': {uri: 'https://knoprka-e6c2e.firebaseapp.com/assets/waste-paper-0.png'},
+        '11': {uri: 'https://knoprka-e6c2e.firebaseapp.com/assets/waste-paper-1.png'},
+        '12': {uri: 'https://knoprka-e6c2e.firebaseapp.com/assets/waste-paper-2.png'},
+        '13': {uri: 'https://knoprka-e6c2e.firebaseapp.com/assets/waste-paper-3.png'}
     }
 }
+
+

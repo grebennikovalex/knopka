@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "knopka",
+    "name": "Knopka-R",
     "slug": "knopka",
     "privacy": "public",
     "sdkVersion": "36.0.0",
@@ -9,9 +9,9 @@
       "android",
       "web"
     ],
-    "version": "1.0.0",
+    "version": "0.1.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/knp-icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -24,7 +24,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false
+    },
+    "android": {
+      "package": "ru.knopka",
+      "versionCode": 1
     },
     "description": ""
   }

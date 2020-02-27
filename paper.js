@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, FlatList, ImageBackground } from 'react-native'
 import { globalStyles } from './globalstyle'
 import WasteItem from './wasteitem'
 import { wasteColors, paperType } from './wastetab'
 import { LinearGradient } from 'expo-linear-gradient'
+import { db } from './config'
+
 
 let values = {
         name: '',
@@ -19,11 +21,24 @@ let values = {
         color: wasteColors[2]
     }
 
+
 export default function Paper( { navigation } ) {
-   
+
+    const [paperType, setPaperType] = useState([])
+
+    useEffect(() => {
+        
+                db.ref('/paperType').on('value', snapshot => {
+                const paper = Object.values(snapshot.val())
+                setPaperType(paper)
+                })
+    },[])    
+
+                 
     const wastePress = (id) => {
         values.type = paperType[id-10].type
         values.id = paperType[id-10].id
+        values.price = paperType[id-10].price
         navigation.navigate('Orderform', {values: values})
     }
  

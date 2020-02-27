@@ -1,5 +1,9 @@
-import Firebase from 'firebase'
-let knp
+import * as firebase from 'firebase'
+import 'firebase/auth'
+import 'firebase/database'
+//import 'firebase/firestore'
+
+
 let config = {
   apiKey: "AIzaSyBm_g9_yNdAsZ-UzsMIRujinyB2i1eLeHg",
   authDomain: "knoprka-e6c2e.firebaseapp.com",
@@ -11,10 +15,11 @@ let config = {
   measurementId: "G-8F7ZWZE6YX"
 }
 
-if (!Firebase.apps.length) {
-  knp = Firebase.initializeApp(config)
+if (!firebase.apps.length) {
+  firebase.initializeApp(config)
 }
 
-export const db = knp.database()
+export const db = firebase.database()
+//export const store = firebase.firestore()
 
 

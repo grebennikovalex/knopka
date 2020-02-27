@@ -15,8 +15,9 @@ console.disableYellowBox = true
 
 const getFonts = () => Font.loadAsync({
    'custom': require('./assets/fonts/MPLUSRounded1c-Black.ttf'),
-   'knp': require('./assets/fonts/knp.ttf')
-   });
+   'knp': require('./assets/fonts/knp.ttf'),
+   'icons': require('./assets/fonts/fa-solid-900.ttf')
+   })
 
 
 

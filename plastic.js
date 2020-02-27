@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, FlatList, ImageBackground } from 'react-native'
 import { globalStyles } from './globalstyle'
 import WasteItem from './wasteitem'
 import { wasteColors, plasticType } from './wastetab'
 import { LinearGradient } from 'expo-linear-gradient'
+import { db } from './config'
 
 let values = {
     name: '',
@@ -21,11 +22,22 @@ let values = {
 
 
 export default function Plastic( { navigation } ) {
+
+    const [plasticType, setPlasticType] = useState([])
+
+    useEffect(() => {
+        
+                db.ref('/plasticType').on('value', snapshot => {
+                const plastic = Object.values(snapshot.val())
+                setPlasticType(plastic)
+                })
+    },[])    
   
 
     const wastePress = (id) => {
         values.type = plasticType[id-4].type
         values.id = plasticType[id-4].id
+        values.price = plasticType[id-4].price
         navigation.navigate('Orderform', {values: values})
         }
   

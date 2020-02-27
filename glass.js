@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState, useEffect }  from 'react'
 import { View,  Text, FlatList, ImageBackground } from 'react-native'
 import { globalStyles } from './globalstyle'
 import WasteItem from './wasteitem'
 import { wasteColors, glassType } from './wastetab'
 import { LinearGradient } from 'expo-linear-gradient'
+import { db } from './config'
 
 let values = {
     name: '',
@@ -20,11 +21,22 @@ let values = {
 }
 
 export default function Glass( { navigation } ) {
+
+    const [glassType, setGlassType] = useState([])
+
+    useEffect(() => {
+        
+                db.ref('/glassType').on('value', snapshot => {
+                const glass = Object.values(snapshot.val())
+                setGlassType(glass)
+                })
+    },[])    
     
 
     const wastePress = (id) => {
         values.type = glassType[id].type
         values.id = glassType[id].id
+        values.price = glassType[id].price
         navigation.navigate('Orderform', {values: values})
     }
     

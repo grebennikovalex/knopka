@@ -1,11 +1,12 @@
 import React, { useState, useCallback  } from 'react'
-import { View,  Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Switch, ImageBackground, Dimensions } from 'react-native'
+import { View,  Text, TouchableOpacity, TouchableWithoutFeedback,
+     Keyboard, Switch, ImageBackground, Dimensions, Platform } from 'react-native'
 import { globalStyles } from './globalstyle'
 import { useFocusEffect } from '@react-navigation/native'
 import { Formik } from 'formik'
 import { TextInput, ScrollView } from 'react-native-gesture-handler'
 import { uuid } from 'uuidv4'
-import Firebase from 'firebase'
+import firebase from 'firebase'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { LinearGradient } from 'expo-linear-gradient'
 import ItemDate from './date'
@@ -54,14 +55,11 @@ export default function Orderform ({ route, navigation }) {
 
         useCallback(() => {
             
-            setUser(Firebase.auth().currentUser) 
+            setUser(firebase.auth().currentUser) 
                     
           }, [])
     )
 
-    
-       
-    
     user ? initialValues.name = user.displayName : initialValues.name = ''
     user ? initialValues.phone = user.photoURL : initialValues.phone = '+7'
     user ? initialValues.email = user.email : initialValues.email = ''
@@ -77,7 +75,7 @@ export default function Orderform ({ route, navigation }) {
                         style = {{flex: 1, alignItems: 'center', }}
                         imageStyle = {{resizeMode : 'repeat'}}>
             <LinearGradient
-                        colors = {['transparent', initialValues.color]}
+                        colors = {['transparent', Platform.OS === 'android' ? initialValues.color : 'transparent']}
                         start = {[0, 0.75]}
                         end = {[0, 0.9]}>
                 <View style = {[globalStyles.orderheader, {alignSelf: 'center'}] }>
@@ -93,7 +91,7 @@ export default function Orderform ({ route, navigation }) {
             
 
             
-                <Formik
+            <Formik
                     initialValues = {initialValues}
                     onSubmit = {(values) => {
                         values.key = uuid()
@@ -116,7 +114,7 @@ export default function Orderform ({ route, navigation }) {
                             :
 
                             <View>
-                            <Text style = {{marginLeft: 25}}>Ваше имя:</Text>
+                            <Text style = {{marginLeft: 25}}>Ваше имя *:</Text>
                             <TextInput
                                 style = { globalStyles.input }
                                 placeholderTextColor = '#a5b1c2'
@@ -323,10 +321,11 @@ export default function Orderform ({ route, navigation }) {
                         </View>
                        )}
 
-                       </Formik>
+            </Formik>
                  
                 </View>
                 </ScrollView>  
+
                 <TouchableOpacity
                         onPress = {() => {
                             navigation.goBack(null)

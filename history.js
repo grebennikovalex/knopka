@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { View,  Text, FlatList, Dimensions, ImageBackground, Image } from 'react-native'
+import { View,  Text, FlatList, Dimensions, ImageBackground, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
 import { globalStyles } from './globalstyle'
 import { wasteColors } from './wastetab'
 import { db } from './config'
-import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler'
-import Firebase from 'firebase'
+import firebase from 'firebase'
 import { wasteImage } from './wasteitem'
 import ItemDate from './date'
 import { LinearGradient } from 'expo-linear-gradient'
@@ -21,8 +20,8 @@ const History = ({ navigation }) => {
 
         useCallback(() => {
             
-            setUser( Firebase.auth().currentUser ) 
-            //console.log(user)
+            setUser(firebase.auth().currentUser) 
+            
                     
           }, [])
     )
@@ -111,23 +110,27 @@ const History = ({ navigation }) => {
                                                 }}>
                                         <View>
                                             <Text style = {{fontFamily: 'custom', fontSize: d * 0.2, color: 'gray'}}>
-                                                {item.type + ' - ' + item.quantity + ' кг.'}</Text>
-                                            <ScrollView style = {{width: d * 3}}>
-                                                <ItemDate  timestamp = {item.date} mode = 'full'/>
-                                            <Text>{item.address}</Text>
-                                            <Text>Лифт: {item.lift ? ' ЕСТЬ' : ' НЕТ'}</Text>
-                                            <View style = {{flexDirection: 'row'}}>
-                                                <Text style = {{fontWeight: 'bold'}}>ВЫВОЗ: </Text> 
-                                                <ItemDate  timestamp = {item.removalDate} mode = 'full'/>
-                                            </View>
-                                            
-                                                
-                                            </ScrollView>    
-                                        </View>
+                                            {item.type + ' - ' + item.quantity + ' кг.'}</Text>
 
-                                       
-                                                    <Image source = {wasteImage.wasteTypes[item.id]}
-                                                    style = {{height: d/1.5, width: d/1.5, marginRight: 5, marginTop: 5}}/>
+                                            <View style = {{width: d * 3}}>
+                                                <ItemDate  timestamp = {item.date} mode = 'full' textStyle = {style.textPlain}/>
+                                                {item.height ?
+                                                <View>
+                                                    <Text style={style.textPlain}>{item.address}</Text>
+                                                    <Text style={style.textPlain}>Лифт: {item.lift ? ' ЕСТЬ' : ' НЕТ'}</Text>
+                                                    <View style = {{flexDirection: 'row'}}>
+                                                        <Text style = {[style.textPlain, {fontWeight: 'bold'}]}>ВЫВОЗ: </Text> 
+                                                        <ItemDate  timestamp = {item.removalDate} mode = 'full' textStyle = {style.textPlain}/>
+                                                    </View>
+                                                </View> : 
+                                                    <View>
+                                                        <Text style = {style.textBold}>...</Text>
+                                                    </View>} 
+                                                
+                                            </View>    
+                                        </View>
+                                                <Image source = {wasteImage.wasteTypes[item.id]}
+                                                style = {{height: d/1.5, width: d/1.5, marginRight: 5, marginTop: 5}}/>
 
                                                 
 
@@ -172,3 +175,15 @@ const History = ({ navigation }) => {
 }
 
 export default History
+
+const style = StyleSheet.create({
+    textPlain: {
+        fontSize: d * 0.2
+    },
+
+    textBold: {
+        fontSize: d * 0.2,
+        fontWeight: 'bold'
+    },
+
+})
