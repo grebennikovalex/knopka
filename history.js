@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { View,  Text, FlatList, Dimensions, ImageBackground, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import { View,  Text, FlatList, Dimensions, ImageBackground,
+     Image, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
 import { globalStyles } from './globalstyle'
 import { wasteColors } from './wastetab'
@@ -68,14 +69,33 @@ const History = ({ navigation }) => {
                     </Text>
             </View>
 
-            <View style = {{
-                flex: 1,
+            <View style = {{flex: 1 }}>
+
+                {user ?  null :
                 
+                    <View style = {{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                        <Text style = {globalStyles.text}> ВЫ ЕЩЕ НИЧЕГО НЕ ЗАКАЗАЛИ </Text>
+                        <Text style={{fontWeight: 'bold', color: 'white', textAlign: 'center',
+                         marginTop: d * 0.2, fontSize: d * 0.2}}> 
+                            {'ЕСЛИ ВЫ ЗАКАЗЫВАЛИ РАНЕЕ,\nВОЙДИТЕ В СВОЙ ПРОФИЛЬ'} 
+                        </Text>
+                       
+                    </View>}
                 
-            }}>
-                
-                {items.length ? 
-                
+                {!items.length ? 
+
+                        <ActivityIndicator
+                                animating={user ? true : false}
+                                size = 'large'
+                                color = 'white'
+                                style = {{
+                                    flex: 1,
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    height: 200
+                                }}/>
+                            :
+               
                 <FlatList
                     keyExtractor = {item => item.key}
                     data = {items.reverse()}
@@ -90,7 +110,7 @@ const History = ({ navigation }) => {
                             }}>
                                 <TouchableOpacity onPress = {() => setItemHeight(item.key)}>
                                     <View style = {{
-                                                backgroundColor: '#dfe4ea',
+                                                backgroundColor: item.process === 'PROCESSING' ? '#3dc1d3' : item.process === 'DONE' ? '#dfe4ea' : 'white',
                                                 height: item.height ? d * 2 : d,
                                                 width: Dimensions.get('screen').width * 0.78,
                                                 paddingLeft: 10,
@@ -109,11 +129,18 @@ const History = ({ navigation }) => {
                                                 justifyContent: 'space-between'
                                                 }}>
                                         <View>
-                                            <Text style = {{fontFamily: 'custom', fontSize: d * 0.2, color: 'gray'}}>
+                                            <Text style = {{fontFamily: 'custom', fontSize: d * 0.2, 
+                                            color: item.process === 'PROCESSING' ? 'white' : 'gray'}}>
                                             {item.type + ' - ' + item.quantity + ' кг.'}</Text>
 
                                             <View style = {{width: d * 3}}>
+                                                <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
                                                 <ItemDate  timestamp = {item.date} mode = 'full' textStyle = {style.textPlain}/>
+                                                    <Text style={{paddingLeft: 10, fontFamily: 'custom', fontSize: d * 0.15,
+                                                    color: item.process === 'PROCESSING' ? 'white' : item.process === 'DONE' ? 'gray' : '#303952'}}>
+                                                    {item.process === 'PROCESSING' ? '- ПРИНЯТ' : item.process === 'DONE' ? '- ВЫВЕЗЕН' : '- В ОБРАБОТКЕ'}
+                                                    </Text>
+                                                </View>
                                                 {item.height ?
                                                 <View>
                                                     <Text style={style.textPlain}>{item.address}</Text>
@@ -160,11 +187,9 @@ const History = ({ navigation }) => {
 
                         </View>
                     )}
-                />
-                : 
-                <View style = {{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                    <Text style = {globalStyles.text}> ВЫ ЕЩЕ НИЧЕГО НЕ ЗАКАЗАЛИ </Text>
-                </View>}
+                />}
+
+              
 
 
             </View>

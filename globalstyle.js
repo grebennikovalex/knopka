@@ -64,6 +64,7 @@ export const globalStyles = StyleSheet.create({
     },
 
     wasteListContainer: {
+        alignItems: 'center',
         flex: 1,
         height: '100%',
         paddingLeft: 1,

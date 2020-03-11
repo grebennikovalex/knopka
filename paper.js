@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, FlatList, ImageBackground } from 'react-native'
+import { View, Text, FlatList, ImageBackground, ActivityIndicator } from 'react-native'
 import { globalStyles } from './globalstyle'
 import WasteItem from './wasteitem'
-import { wasteColors, paperType } from './wastetab'
+import { wasteColors } from './wastetab'
 import { LinearGradient } from 'expo-linear-gradient'
 import { db } from './config'
 
@@ -41,9 +41,10 @@ export default function Paper( { navigation } ) {
         values.price = paperType[id-10].price
         navigation.navigate('Orderform', {values: values})
     }
- 
+       
+
     return(
-        <View style = {[globalStyles.container, {backgroundColor: wasteColors[2], alignItems: 'stretch'}]}>
+        <View style = {[globalStyles.container, {backgroundColor: wasteColors[2] }]}>
             <ImageBackground 
                     source = {require('./assets/knp_backG.png')}
                     style = {{alignItems: 'center', height: '100%', width: '100%'}}
@@ -62,19 +63,38 @@ export default function Paper( { navigation } ) {
             </Text>
             </View>
             <View style = {globalStyles.wasteListContainer}>
-            <FlatList
-                numColumns = {2}
-                data = {paperType}
-                keyExtractor = {item => item.id}
-                renderItem = {({item}) => (
-                
-                <WasteItem
-                    id = {item.id}
-                    wastePress = {wastePress}                  
-                    item = {item}
-                />
-                )}
-            />
+
+            {!paperType.length ?  
+
+            <ActivityIndicator
+                    animating={true}
+                    size = 'large'
+                    color = 'white'
+                    style = {{
+                        flex: 1,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        height: 200
+                    }}/> 
+                    
+                    :   
+                    
+                    <FlatList
+                    numColumns = {2}
+                    data = {paperType}
+                    keyExtractor = {item => item.id}
+                    renderItem = {({item}) => (
+                    
+                    <WasteItem
+                        id = {item.id}
+                        wastePress = {wastePress}                  
+                        item = {item}
+                    />
+                    )}
+                />}
+           
+
+          
             </View>
             </LinearGradient>
             </ImageBackground>  

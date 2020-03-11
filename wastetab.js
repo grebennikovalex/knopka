@@ -2,7 +2,7 @@ import React from 'react'
 import { TouchableOpacity, View, Text, Dimensions } from 'react-native'
 import { globalStyles } from './globalstyle'
 
-export const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+// export const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
 
 export const wasteColors = ['#33d9b2', '#ffb142', '#45aaf2', '#a5b1c2', 'white']
 

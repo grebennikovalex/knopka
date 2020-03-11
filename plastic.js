@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, FlatList, ImageBackground } from 'react-native'
+import { View, Text, FlatList, ImageBackground, ActivityIndicator } from 'react-native'
 import { globalStyles } from './globalstyle'
 import WasteItem from './wasteitem'
-import { wasteColors, plasticType } from './wastetab'
+import { wasteColors } from './wastetab'
 import { LinearGradient } from 'expo-linear-gradient'
 import { db } from './config'
 
@@ -60,6 +60,21 @@ export default function Plastic( { navigation } ) {
             </Text>
             </View>
             <View style = {globalStyles.wasteListContainer}>
+
+            {!plasticType.length ? 
+
+            <ActivityIndicator
+                    animating={true}
+                    size = 'large'
+                    color = 'white'
+                    style = {{
+                        flex: 1,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        height: 200
+                    }}/>
+                :
+                    
             <FlatList
                 numColumns = {2}
                 data = {plasticType}
@@ -72,7 +87,8 @@ export default function Plastic( { navigation } ) {
                     wastePress = {wastePress}
                 />
                 )}
-            />
+                />
+            }
             </View>
             </LinearGradient>
             </ImageBackground>   

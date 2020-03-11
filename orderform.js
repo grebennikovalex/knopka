@@ -78,7 +78,7 @@ export default function Orderform ({ route, navigation }) {
                         colors = {['transparent', Platform.OS === 'android' ? initialValues.color : 'transparent']}
                         start = {[0, 0.75]}
                         end = {[0, 0.9]}>
-                <View style = {[globalStyles.orderheader, {alignSelf: 'center'}] }>
+                <View style = {[globalStyles.orderheader, {alignSelf: 'center'}]}>
                     <Text style = {[globalStyles.text, {color: 'white'}]}>
                             { ' ВЫВОЗИМ: ' + initialValues.type + ' '}
                     </Text>
@@ -96,6 +96,7 @@ export default function Orderform ({ route, navigation }) {
                     onSubmit = {(values) => {
                         values.key = uuid()
                         values.lift = lift
+                        values.process = false
                         values.removalDate = dateFinal.getTime()
                         Keyboard.dismiss()
                         navigation.navigate('Confirmation', { values: values, user: user })
@@ -104,7 +105,7 @@ export default function Orderform ({ route, navigation }) {
                     {props => (
                         <View style = {{width: '100%'}}>
                             {user ?
-                            <View style = { [globalStyles.input, {backgroundColor: 'transparent', borderWidth: 2, justifyContent: 'center'} ]}>
+                            <View style = {[globalStyles.input, {backgroundColor: 'transparent', borderWidth: 2, justifyContent: 'center'}]}>
                                 <Text style = {globalStyles.text}>
                                     {user.displayName}
                                 </Text>

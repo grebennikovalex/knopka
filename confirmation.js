@@ -17,6 +17,7 @@ let user = route.params.user
 
 const addOrder = (item) => {
     item.date = firebase.database.ServerValue.TIMESTAMP
+    item.inProcess = false
     db.ref('/users/' + user.uid).push(item)
     .then(Alert.alert('ВАШ ЗАКАЗ ОТПРАВЛЕН'))
     .then(navigation.navigate('History'))
@@ -48,6 +49,7 @@ const createUser = (values) => {
             }).then(function(user) {
                 
                 values.date = firebase.database.ServerValue.TIMESTAMP
+                values.inProcess = false
                 db.ref('/users/' + user.uid).push(values)
                 .then(Alert.alert(' ПОЗДРАВЛЯЕМ! \n ВАШ ПЕРВЫЙ ЗАКАЗ ОТПРАВЛЕН!'))
                 .then(navigation.navigate('History'))
@@ -66,6 +68,7 @@ const createUser = (values) => {
                     .then(function(user) {
                         user = firebase.auth().currentUser
                         values.date = firebase.database.ServerValue.TIMESTAMP
+                        values.inProcess = false
                         db.ref('/users/' + user.uid).push(values)
                         .then(Alert.alert('ВАШ ЗАКАЗ ОТПРАВЛЕН'))
                         .then(navigation.navigate('History'))
@@ -93,11 +96,11 @@ const createUser = (values) => {
    
 } 
 
-let price = values.price * parseInt(values.quantity)
+// let price = values.price * parseInt(values.quantity)
 
 return (
 
-<View style = {[globalStyles.container, {backgroundColor: '#ced6e0', alignItems: 'center', justifyContent: 'flex-start' }]}>
+<View style = {[globalStyles.container, {backgroundColor: '#ced6e0', alignItems: 'center', justifyContent: 'space-between' }]}>
 <ImageBackground 
             source = {require('./assets/knp_backG.png')}
             style = {{flex: 1, alignItems: 'center', width: '100%'}}
@@ -133,28 +136,17 @@ return (
                 <Text>ДАТА ВЫВОЗА: </Text>
                 <ItemDate  timestamp = {values.removalDate} mode = 'full'/>
             </View>
-            <Text style={{
+            {/* <Text style={{
                 marginTop: 10, 
                 fontFamily: 'custom', 
                 fontSize: 25,
                 color: persData ? 'gray' : '#dfe6e9'
                 }}>{price + '\u20bd'}
             </Text>
-            <Text style={{fontSize: 10, color: persData ? 'black' : '#dfe6e9'}}>* предположительная стоимость</Text>
+            <Text style={{fontSize: 10, color: persData ? 'black' : '#dfe6e9'}}>* предположительная стоимость</Text> */}
         </View>
        
-        <TouchableOpacity
-            style = {{width: '100%', alignItems: 'center'}}  
-            disabled = {!persData}
-            onPress = {() => {!user ? 
-                    createUser(values) 
-                    : addOrder(values)
-                    
-                    }}>
-            <View style = { [persData ? globalStyles.activeButton : globalStyles.passiveButton, {width: '90%', marginTop: 20}]}>
-               <Text style = {{fontFamily: 'custom', color: 'white'}}> ПОДТВЕРДИТЬ ЗАКАЗ</Text>
-            </View>
-        </TouchableOpacity>
+        
        
         
         <View style = {{
@@ -175,22 +167,41 @@ return (
                             value = {persData}
                             onPress = {() => persData ? setPersData(false) : setPersData(true)}
                             />
-                        </View>
+            </View>
+
+
+
     </View>
-    
     <TouchableOpacity
-        style = {{width: '100%', alignItems: 'center'}}
-        onPress = {() => {
-        setPersData(false)
-        navigation.goBack(null)
-        }}>
-        <View style = {[globalStyles.passiveButton, {width: '90%', backgroundColor: 'white'}]}>
-            <Text style = {{fontFamily: 'custom', color: '#b2bec3'}}> ОТМЕНИТЬ </Text>
-            </View>    
-    </TouchableOpacity>
+            style = {{width: '100%', alignItems: 'center'}}  
+            disabled = {!persData}
+            onPress = {() => {!user ? 
+                    createUser(values) 
+                    : addOrder(values)
+                    
+                    }}>
+            <View style = { [persData ? globalStyles.activeButton : globalStyles.passiveButton, {width: '90%', marginVertical: 20}]}>
+               <Text style = {{fontFamily: 'custom', color: 'white'}}> ПОДТВЕРДИТЬ ЗАКАЗ</Text>
+            </View>
+        </TouchableOpacity>    
+    
     
     </View>
-    </ImageBackground>    
+       
+    </ImageBackground>   
+
+    <TouchableOpacity
+            style = {{width: '100%', alignItems: 'center'}}
+            onPress = {() => {
+            setPersData(false)
+            navigation.goBack(null)
+            }}>
+                <View style = {[globalStyles.passiveButton, {width: '80%', backgroundColor: 'white', marginBottom: 20}]}>
+                    <Text style = {{fontFamily: 'custom', color: '#b2bec3'}}> ОТМЕНИТЬ </Text>
+                </View>    
+
+        </TouchableOpacity>
+
 </View> 
 
 

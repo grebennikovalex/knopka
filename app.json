@@ -28,7 +28,8 @@
     },
     "android": {
       "package": "ru.knopka",
-      "versionCode": 1
+      "versionCode": 1,
+      "permissions": []
     },
     "description": ""
   }
