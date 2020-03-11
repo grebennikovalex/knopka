@@ -4,7 +4,7 @@ const admin = require('firebase-admin')
 const nodemailer = require('nodemailer')
 
 
-const serviceAccount = require("./knoprka-e6c2e-firebase-adminsdk-t8y97-854aa5a381.json")
+const serviceAccount = require("./xxxxxxxx.json")
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://knoprka-e6c2e.firebaseio.com"
