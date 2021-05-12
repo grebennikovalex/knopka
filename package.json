@@ -20,7 +20,7 @@
     "expo": "~36.0.0",
     "firebase": "^7.9.1",
     "formik": "^2.1.2",
-    "nodemailer": "^6.4.3",
+    "nodemailer": "^6.4.16",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
